@@ -16,7 +16,11 @@ struct subnode
     struct subnode* sublink;
 };
 
-
+create_database(struct mainnode* arr[]);
+display_database(struct mainnode* arr[]);
+search_word(struct mainnode* arr[]);
+update_database(struct mainnode* arr[]);
+save_database(struct mainnode* arr[]);
 
 
 #endif
