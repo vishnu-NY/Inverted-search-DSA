@@ -16,11 +16,26 @@ struct subnode
     struct subnode* sublink;
 };
 
-create_database(struct mainnode* arr[]);
-display_database(struct mainnode* arr[]);
-search_word(struct mainnode* arr[]);
-update_database(struct mainnode* arr[]);
-save_database(struct mainnode* arr[]);
+struct ip_file
+{
+    char filename[26];
+    struct ip_file* link;
+};
 
+typedef enum
+{
+    SUCCESS,
+    FAILURE
+} status;
+
+status create_database(struct mainnode* arr[]);
+status display_database(struct mainnode* arr[]);
+status search_word(struct mainnode* arr[]);
+status update_database(struct mainnode* arr[]);
+status save_database(struct mainnode* arr[]);
+status display_help_menu();
+
+status validate_arguments(int argc, char* argv[], struct ip_file ** ip_file_head);
+status add_to_last_ip_files(char* filename,struct ip_file** head );
 
 #endif
