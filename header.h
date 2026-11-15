@@ -13,7 +13,7 @@ struct subnode
 {
     char filename[25];
     int wordcount;
-    struct subnode* sublink;
+    struct subnode* link;
 };
 
 struct ip_file
@@ -25,7 +25,10 @@ struct ip_file
 typedef enum
 {
     SUCCESS,
-    FAILURE
+    FAILURE,
+    DUPLICATE,
+    EMPTY,
+    NOT_FOUND
 } status;
 
 status create_database(struct mainnode* arr[]);

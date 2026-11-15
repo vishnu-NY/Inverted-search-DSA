@@ -12,6 +12,7 @@ int main (int argc, char **argv)
 
     validate_arguments(argc,argv,&ip_files_head);
 
+
     while(choice != 7)
     {
         printf("\n1. Create Database\n2. Display Database\n3. Search Word\n4. Update Database\n5. Save Database\n6. Help menu\n7. Exit\nEnter your choice: ");
@@ -20,7 +21,7 @@ int main (int argc, char **argv)
         switch(choice)
         {
             case 1:
-                create_database(arr);
+                create_database(arr,ip_files_head);
                 break;
             case 2:
                 display_database(arr);
