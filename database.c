@@ -15,7 +15,8 @@ status create_database(struct mainnode* arr[], struct ip_file* ip_head)
         ip_head = ip_head->link;
         continue;
     }
-    char word[25];
+    printf("Starting to scan the file %s\n",ip_head->filename);
+    char word[50];
     int repeat_flag=0;
 
     while(fscanf(fptr,"%s",word) != EOF)
@@ -32,6 +33,8 @@ status create_database(struct mainnode* arr[], struct ip_file* ip_head)
             insert_word(arr,word,ip_head->filename);
         }
     }
+    printf("File %s closed\n",ip_head->filename);
+    fclose(fptr);
     ip_head = ip_head->link;
     
  }   
@@ -59,8 +62,28 @@ status display_database(struct mainnode* arr[])
 }
 status search_word(struct mainnode* arr[])
 {
-    // Implementation of search_word function
-    return SUCCESS;
+    char search_word[50];
+    printf("Enter the word to search: ");
+    scanf("%s", search_word);
+    int index = hash_function(search_word);
+    struct mainnode* temp = arr[index];
+    while(temp != NULL)
+    {
+        if(strcmp(temp->word,search_word) == 0)
+        {
+            printf("Word: %s found in %d files\n", temp->word, temp->filecount);
+            struct subnode* subtemp = temp->sublink;
+            while(subtemp != NULL)
+            {
+                printf("\tFilename: %s, Word Count: %d\n", subtemp->filename, subtemp->wordcount);
+                subtemp = subtemp->link;
+            }
+            return SUCCESS;
+        }
+        temp = temp->mainlink;
+    }
+    printf("Word: %s not found in the database\n", search_word);
+    return NOT_FOUND;
 }
 status update_database(struct mainnode* arr[])
 {
@@ -68,12 +91,12 @@ status update_database(struct mainnode* arr[])
     return SUCCESS;
 }
 status save_database(struct mainnode* arr[])
-{   
-    // Implementation of save_database function
-    return SUCCESS;
+{  
+    
 }
 status display_help_menu()
 {
-    // Implementation of display_help_menu function
+    printf("Input format: ./program_name file1.txt file2.txt ...\n");
+    printf("Only .txt files are accepted. Other formats will be ignored.\n");
     return SUCCESS;
 }
