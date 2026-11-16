@@ -92,7 +92,12 @@ status update_database(struct mainnode* arr[])
 }
 status save_database(struct mainnode* arr[])
 {  
-    
+    FILE *dptr = fopen("database.txt", "w");
+    if(dptr == NULL)
+    {
+        printf("Error: Failed to open the database file for writing.\n");
+        return FAILURE;
+    }
 }
 status display_help_menu()
 {
