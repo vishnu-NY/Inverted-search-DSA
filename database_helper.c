@@ -1,3 +1,8 @@
+#include<stdio.h>
+#include<string.h>
+#include"header.h"
+#include<stdlib.h>
+
 int hash_function(char* word)
 {
     char first_letter = word[0];
@@ -29,24 +34,24 @@ int find_duplicate(struct mainnode* head,char* word)
     }
     return 0;
 }
-int insert_word(struct mainnode* arr[],char* word, struct ip_files* ip_head)
+int insert_word(struct mainnode* arr[],char* word,char*filename)
 {
     struct mainnode* newmain = malloc(sizeof(struct mainnode));
     struct subnode* newsub = malloc(sizeof(struct subnode));
     newmain->mainlink = NULL;
     strcpy(newmain->word,word);
-    strcpy(newsub->filename,ip_head->filename);
+    strcpy(newsub->filename,filename);
     newmain->filecount = 1;
     newsub->wordcount = 1;
     newsub->link = NULL; 
     newmain->sublink = newsub;
     
-    if(*arr[hash_function(word)] == NULL)
+    if(arr[hash_function(word)] == NULL)
     {
-        *arr[hash_function(word)] = newmain;
+        arr[hash_function(word)] = newmain;
         return SUCCESS;
     }
-    struct mainnode* temp = *arr[hash_function(word)];
+    struct mainnode* temp = arr[hash_function(word)];
     while(temp->mainlink !=NULL)
     {
         temp = temp->mainlink;
@@ -59,7 +64,7 @@ int insert_word(struct mainnode* arr[],char* word, struct ip_files* ip_head)
 int increment_wordcount(struct mainnode* head,char *word, char* filename)
 {
     struct mainnode* maintemp = head;
-    struct subnode* subtemp = NULL
+    struct subnode* subtemp = NULL;
     struct subnode* prev = NULL;
     while(maintemp!=NULL)
     {

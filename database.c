@@ -3,15 +3,15 @@
 #include"header.h"
 #include<stdlib.h>
 
-status create_database(struct mainnode* arr[], struct ip_files* ip_head)
+status create_database(struct mainnode* arr[], struct ip_file* ip_head)
 {
     
  while(ip_head != NULL)
  {
-    FILE *fptr = fopen(ip_head->filename,"r")
+    FILE *fptr = fopen(ip_head->filename,"r");
     if(fptr == NULL)
     {
-        printf("Error: Failed to open the file %s and hence it will be ignored\n");
+        printf("Error: Failed to open the file %s and hence it will be ignored\n",ip_head->filename);
         ip_head = ip_head->link;
         continue;
     }
@@ -29,16 +29,33 @@ status create_database(struct mainnode* arr[], struct ip_files* ip_head)
         }
         else
         {
-            insert_word(&arr,word,ip_head->filename);
+            insert_word(arr,word,ip_head->filename);
         }
     }
+    ip_head = ip_head->link;
     
  }   
 
 }
 status display_database(struct mainnode* arr[])
 {
-    
+    for(int i=0;i<27;i++)
+    {
+        struct mainnode* temp = arr[i];
+        while(temp != NULL)
+        {
+            printf("Word: %s, File Count: %d\n", temp->word, temp->filecount);
+            struct subnode* subtemp = temp->sublink;
+            while(subtemp != NULL)
+            {
+                printf("\tFilename: %s, Word Count: %d\n", subtemp->filename, subtemp->wordcount);
+                subtemp = subtemp->link;
+            }
+            temp = temp->mainlink;
+        }
+    }
+    return SUCCESS;
+
 }
 status search_word(struct mainnode* arr[])
 {
