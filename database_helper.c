@@ -83,12 +83,47 @@ int increment_wordcount(struct mainnode* head,char *word, char* filename)
                 subtemp = subtemp->link;
             }
 
-            struct subnode* newsub = malloc(sizeof(newsub));
+            struct subnode* newsub = malloc(sizeof(struct subnode));
             newsub->link =NULL;
             strcpy(newsub->filename,filename);
             newsub->wordcount = 1;
             prev->link = newsub;
 
         }
+        maintemp = maintemp->mainlink;
     }
+}
+
+int validate_database_file(void)
+{
+    FILE* fptr = fopen("database.txt", "r");
+    if(fptr == NULL)
+    {
+        printf("Error: Failed to open the database file for validation.\n");
+        return FAILURE;
+    }
+    char ch;
+    if((ch =fgetc(fptr)) == EOF)
+    {
+        printf("Error: Database file is empty.\n");
+        fclose(fptr);
+        return FAILURE;
+    }
+    if(ch!="#")
+    {
+        printf("Error: Database file is not in the correct format.\n");
+        fclose(fptr);
+        return FAILURE;
+    }
+    fseek(fptr, 0, SEEK_END);
+    ch = fgetc(fptr);
+    if(ch!="#")
+    {
+        printf("Error: Database file is not in the correct format.\n");
+        fclose(fptr);
+        return FAILURE;
+    }
+    fgets(NULL, 0, fptr);
+    fclose(fptr);
+    return SUCCESS;
 }
